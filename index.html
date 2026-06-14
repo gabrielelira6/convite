@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quer sair comigo?</title>
     
-    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/833/833472.png">
+    <link type="image/png" rel="icon" href="https://cdn-icons-png.flaticon.com/512/833/833472.png">
 
     <style>
         * {
@@ -19,64 +19,72 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            background: linear-gradient(135deg, #ffe6e6 0%, #ffb3b3 100%);
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.35)), 
+                        url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=1920&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             overflow: hidden;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.82);
+            padding: 45px 35px;
+            border-radius: 28px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.05);
             text-align: center;
             max-width: 420px;
             width: 90%;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             z-index: 5;
-            transition: all 0.5s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         h1, h2 {
-            color: #d63031;
-            font-size: 2rem;
+            color: #1a1a1a;
+            font-size: 1.9rem;
+            font-weight: 800;
             margin-bottom: 35px;
-            line-height: 1.4;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
         }
 
         .botoes {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             justify-content: center;
             align-items: center;
-            min-height: 60px;
+            min-height: 70px;
         }
 
         button {
-            padding: 15px 35px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            padding: 16px 38px;
+            font-size: 1.1rem;
+            font-weight: 700;
             border: none;
-            border-radius: 50px;
+            border-radius: 18px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         #sim {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            background: linear-gradient(135deg, #c0392b, #962d22);
             color: white;
-            animation: pulsar 1.5s infinite;
-            transition: transform 0.2s;
+            box-shadow: 0 10px 25px rgba(150, 45, 34, 0.35);
+            animation: pulsar 1.8s infinite ease-in-out;
         }
 
         #sim:hover {
-            transform: scale(1.1);
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 15px 30px rgba(150, 45, 34, 0.5);
         }
 
         #nao {
-            background: linear-gradient(135deg, #ff7675, #d63031);
-            color: white;
-            transition: all 0.15s ease-out;
+            background: #ffffff;
+            color: #555;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
         .oculto {
@@ -86,94 +94,252 @@
         .lista-lugares {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .btn-lugar {
-            background: white;
-            color: #333;
-            border: 2px solid #ffb3b3;
-            border-radius: 15px;
-            padding: 12px 20px;
-            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            color: #2d3436;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 16px;
+            padding: 16px 20px;
+            font-size: 1.05rem;
             font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: none;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
         }
 
         .btn-lugar:hover {
-            background: #ffe6e6;
-            border-color: #d63031;
-            transform: translateY(-2px);
+            background: linear-gradient(135deg, #c0392b, #962d22);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(150, 45, 34, 0.25);
+        }
+
+       
+        .player-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            z-index: 10;
+        }
+
+        .cd-wrapper {
+            position: relative;
+            width: 50px;
+            height: 50px;
+        }
+
+        .cd-disco {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #111;
+            /* Detalhe central simulando um CD/Vinil real */
+            border: 3px solid #222;
+            box-shadow: inset 0 0 0 10px rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: girar 4s linear infinite;
+            animation-play-state: paused;
+            transition: transform 0.3s;
+        }
+
+        .cd-centro {
+            width: 14px;
+            height: 14px;
+            background: #fff;
+            border-radius: 50%;
+            border: 3px solid #111;
+        }
+
+        .player-controles {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .track-info {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #333;
+            max-width: 120px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .botoes-player {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-p {
+            background: none;
+            border: none;
+            box-shadow: none;
+            padding: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        .btn-p:hover { transform: scale(1.15); }
+
+        .slider-volume {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 70px;
+            height: 4px;
+            border-radius: 2px;
+            background: #ddd;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .slider-volume::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #962d22;
+        }
+
+        @keyframes girar {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @keyframes pulsar {
             0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.03); }
             100% { transform: scale(1); }
-        }
-
-        .coracao-bg {
-            position: absolute;
-            color: rgba(214, 48, 49, 0.15);
-            font-size: 20px;
-            pointer-events: none;
-            animation: subir 5s linear infinite;
-            z-index: 0;
-        }
-
-        @keyframes subir {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
 
-    <audio id="musica-romantica" src="Only over You (2016 Remaster) [soIdnMFl5vE].mp3" loop></audio>
+    
+    <audio id="musica-romantica" loop></audio>
 
+    
+    <div class="player-container">
+        <div class="cd-wrapper">
+            <div id="cd" class="cd-disco">
+                <div class="cd-centro"></div>
+            </div>
+        </div>
+        <div class="player-controles">
+            <div id="nome-faixa" class="track-info">Fleetwood Mac 🎵</div>
+            <div class="botoes-player">
+                <button class="btn-p" onclick="controlarPlay()" id="btn-play-pause" title="Play/Pause">▶️</button>
+                <button class="btn-p" onclick="proximaFaixa()" title="Próxima Faixa">⏭️</button>
+                <input type="range" class="slider-volume" min="0" max="1" step="0.05" value="0.7" oninput="mudarVolume(this.value)" title="Volume">
+            </div>
+        </div>
+    </div>
+
+    <!-- TELA 1: O Pedido -->
     <div id="tela1" class="container">
-        <h1>🌹 Aceita Sair Comigo? 🌹</h1>
+        <h1>🌹 Aceita sair comigo? 🌹</h1>
         <div class="botoes">
             <button id="sim" onclick="proximaTela()">SIM!</button>
             <button id="nao" onmouseover="fugir()" onclick="fugir()">NÃO</button>
         </div>
     </div>
 
+    <!-- TELA 2: Escolha do Lugar -->
     <div id="tela2" class="container oculto">
-        <h2><br>❤️ Onde a rainha da aura gostaria de ir? ❤️</h2>
+        <h2>❤️ Onde a rainha da aura gostaria de ir? ❤️</h2>
         <div class="lista-lugares">
-            <button class="btn-lugar" onclick="enviarWhats('Liberdade')">⛩️ Passear na Liberdade ⛩️</button>
-            <button class="btn-lugar" onclick="enviarWhats('Paulista')">🏁 Andar na Paulista 🏁</button>
-            <button class="btn-lugar" onclick="enviarWhats('Galeria do Rock')">🎸 Conhecer a Galeria do Rock 🎸</button>
-            <button class="btn-lugar" onclick="enviarWhats('Ibirapuera')">🌳 Ir no Parque Ibirapuera 🌳</button>
-            <button class="btn-lugar" onclick="enviarWhats('Escolha da Rainha')">👸🏻 Escolha da Rainha 👸🏻</button>
+            <button class="btn-lugar" onclick="enviarWhats('Passear na Liberdade ⛩️')">⛩️ Passear na Liberdade ⛩️</button>
+            <button class="btn-lugar" onclick="enviarWhats('Andar na Paulista 🏁')">🏁 Andar na Paulista 🏁</button>
+            <button class="btn-lugar" onclick="enviarWhats('Conhecer a Galeria do Rock 🎸')">🎸 Conhecer a Galeria do Rock 🎸</button>
+            <button class="btn-lugar" onclick="enviarWhats('Ir no Parque Ibirapuera 🌳')">🌳 Ir no Parque Ibirapuera 🌳</button>
+            <button class="btn-lugar" onclick="enviarWhats('Escolha da Rainha 👸🏻')">👸🏻 Escolha da Rainha 👸🏻</button>
         </div>
     </div>
 
     <script>
-        // Função auxiliar para tocar a música assim que houver qualquer interação
+        const playlist = [
+            { nome: "Only Over You - Fleetwood Mac ", src: "Only over You (2016 Remaster) [soIdnMFl5vE].mp3" },
+            { nome: "Everybody Here Wants You - Jeff Buckley", src: "Everybody Here Wants You - Jeff Buckley (youtube).mp3" },
+            { nome: "Que Maravilha - Jorge Ben Jor", src: "Que Maravilha - Jorge Ben Jor (youtube).mp3" },
+            { nome: "Something - George Harrison", src: "Something (Live from Madison Square Garden, New York, U.S.A, 1971 _ 2009 Remaster) - George Harrison (youtube).mp3" },
+            { nome: "Azul - Gal Costa", src: "Azul - Gal Costa (youtube).mp3" },
+            { nome: "Samurai (ft. Stevie Wonder) - Djavan", src: "Djavan - Samurai (Áudio Oficial) ft. Stevie Wonder - DjavanVEVO (youtube).mp3" }
+        ];
+        
+        let indiceAtual = 0;
+        const audio = document.getElementById('musica-romantica');
+        const cd = document.getElementById('cd');
+        const btnPlay = document.getElementById('btn-play-pause');
+        const nomeFaixa = document.getElementById('nome-faixa');
+
+        // Carrega a primeira música sem dar play (respeitando o navegador)
+        function carregarMusica(index) {
+            audio.src = playlist[index].src;
+            nomeFaixa.innerText = playlist[index].nome;
+        }
+        carregarMusica(indiceAtual);
+
         function ligarMusica() {
-            const audio = document.getElementById('musica-romantica');
-            // play() retorna uma promessa, tratamos para evitar erros caso o navegador bloqueie
-            audio.play().catch(e => console.log("Aguardando clique real para tocar som"));
+            audio.play().then(() => {
+                cd.style.animationPlayState = 'running';
+                btnPlay.innerText = "⏸️";
+            }).catch(e => console.log("Aguardando interação real."));
+        }
+
+        function controlarPlay() {
+            if (audio.paused) {
+                ligarMusica();
+            } else {
+                audio.pause();
+                cd.style.animationPlayState = 'paused';
+                btnPlay.innerText = "▶️";
+            }
+        }
+
+        function proximaFaixa() {
+            indiceAtual = (indiceAtual + 1) % playlist.length;
+            carregarMusica(indiceAtual);
+            ligarMusica();
+        }
+
+        function mudarVolume(valor) {
+            audio.volume = valor;
         }
 
         function proximaTela() {
-            ligarMusica(); // Toca a música se clicar no SIM
+            ligarMusica();
             document.getElementById('tela1').classList.add('oculto');
             document.getElementById('tela2').classList.remove('oculto');
         }
 
         function fugir() {
-            ligarMusica(); // Toca a música assim que o botão NÃO tentar fugir pela primeira vez!
+            ligarMusica();
             
             const bNao = document.getElementById('nao');
             const larguraTela = window.innerWidth;
             const alturaTela = window.innerHeight;
             const larguraBotao = bNao.offsetWidth;
             const alturaBotao = bNao.offsetHeight;
-            const margem = 30;
+            const margem = 40;
             
             const limiteX = larguraTela - larguraBotao - margem;
             const limiteY = alturaTela - alturaBotao - margem;
@@ -184,27 +350,15 @@
             bNao.style.position = 'fixed';
             bNao.style.left = `${novoX}px`;
             bNao.style.top = `${novoY}px`;
+            bNao.style.transition = 'all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
         }
 
         function enviarWhats(lugar) {
-            const seuNumero = "5511915857347"; // !!! LEMBRE-SE DE ALTERAR !!!
+            const seuNumero = "5511915857347"; 
             const texto = `Eu aceito o date! ❤️ Escolhi a opção para irmos em: ${lugar}`;
             const mensagem = encodeURIComponent(texto);
             window.location.href = `https://wa.me/${seuNumero}?text=${mensagem}`;
         }
-
-        function criarCoracoes() {
-            const caracters = ['❤️', '💖', '🌹'];
-            const coracao = document.createElement('div');
-            coracao.classList.add('coracao-bg');
-            coracao.innerText = caracters[Math.floor(Math.random() * caracters.length)];
-            coracao.style.left = Math.random() * 100 + 'vw';
-            coracao.style.animationDuration = (Math.random() * 2 + 3) + 's';
-            coracao.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            document.body.appendChild(coracao);
-            setTimeout(() => { coracao.remove(); }, 5000);
-        }
-        setInterval(criarCoracoes, 400);
     </script>
 
 </body>
