@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quer sair comigo?</title>
+    
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/833/833472.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ffe6e6 0%, #ffb3b3 100%);
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            backdrop-filter: blur(5px);
+            z-index: 5;
+            transition: all 0.5s ease;
+        }
+
+        h1, h2 {
+            color: #d63031;
+            font-size: 2rem;
+            margin-bottom: 35px;
+            line-height: 1.4;
+        }
+
+        .botoes {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            min-height: 60px;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        #sim {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            animation: pulsar 1.5s infinite;
+            transition: transform 0.2s;
+        }
+
+        #sim:hover {
+            transform: scale(1.1);
+        }
+
+        #nao {
+            background: linear-gradient(135deg, #ff7675, #d63031);
+            color: white;
+            transition: all 0.15s ease-out;
+        }
+
+        .oculto {
+            display: none !important;
+        }
+
+        .lista-lugares {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn-lugar {
+            background: white;
+            color: #333;
+            border: 2px solid #ffb3b3;
+            border-radius: 15px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: none;
+        }
+
+        .btn-lugar:hover {
+            background: #ffe6e6;
+            border-color: #d63031;
+            transform: translateY(-2px);
+        }
+
+        @keyframes pulsar {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .coracao-bg {
+            position: absolute;
+            color: rgba(214, 48, 49, 0.15);
+            font-size: 20px;
+            pointer-events: none;
+            animation: subir 5s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes subir {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="musica-romantica" src="Only over You (2016 Remaster) [soIdnMFl5vE].mp3" loop></audio>
+
+    <div id="tela1" class="container">
+        <h1>🌹 Aceita Sair Comigo? 🌹</h1>
+        <div class="botoes">
+            <button id="sim" onclick="proximaTela()">SIM!</button>
+            <button id="nao" onmouseover="fugir()" onclick="fugir()">NÃO</button>
+        </div>
+    </div>
+
+    <div id="tela2" class="container oculto">
+        <h2><br>❤️ Onde a rainha da aura gostaria de ir? ❤️</h2>
+        <div class="lista-lugares">
+            <button class="btn-lugar" onclick="enviarWhats('Liberdade')">⛩️ Passear na Liberdade ⛩️</button>
+            <button class="btn-lugar" onclick="enviarWhats('Paulista')">🏁 Andar na Paulista 🏁</button>
+            <button class="btn-lugar" onclick="enviarWhats('Galeria do Rock')">🎸 Conhecer a Galeria do Rock 🎸</button>
+            <button class="btn-lugar" onclick="enviarWhats('Ibirapuera')">🌳 Ir no Parque Ibirapuera 🌳</button>
+            <button class="btn-lugar" onclick="enviarWhats('Escolha da Rainha')">👸🏻 Escolha da Rainha 👸🏻</button>
+        </div>
+    </div>
+
+    <script>
+        // Função auxiliar para tocar a música assim que houver qualquer interação
+        function ligarMusica() {
+            const audio = document.getElementById('musica-romantica');
+            // play() retorna uma promessa, tratamos para evitar erros caso o navegador bloqueie
+            audio.play().catch(e => console.log("Aguardando clique real para tocar som"));
+        }
+
+        function proximaTela() {
+            ligarMusica(); // Toca a música se clicar no SIM
+            document.getElementById('tela1').classList.add('oculto');
+            document.getElementById('tela2').classList.remove('oculto');
+        }
+
+        function fugir() {
+            ligarMusica(); // Toca a música assim que o botão NÃO tentar fugir pela primeira vez!
+            
+            const bNao = document.getElementById('nao');
+            const larguraTela = window.innerWidth;
+            const alturaTela = window.innerHeight;
+            const larguraBotao = bNao.offsetWidth;
+            const alturaBotao = bNao.offsetHeight;
+            const margem = 30;
+            
+            const limiteX = larguraTela - larguraBotao - margem;
+            const limiteY = alturaTela - alturaBotao - margem;
+            
+            const novoX = Math.max(margem, Math.floor(Math.random() * limiteX));
+            const novoY = Math.max(margem, Math.floor(Math.random() * limiteY));
+            
+            bNao.style.position = 'fixed';
+            bNao.style.left = `${novoX}px`;
+            bNao.style.top = `${novoY}px`;
+        }
+
+        function enviarWhats(lugar) {
+            const seuNumero = "5511999999999"; // !!! LEMBRE-SE DE ALTERAR !!!
+            const texto = `Eu aceito o date! ❤️ Escolhi a opção para irmos em: ${lugar}`;
+            const mensagem = encodeURIComponent(texto);
+            window.location.href = `https://wa.me/${seuNumero}?text=${mensagem}`;
+        }
+
+        function criarCoracoes() {
+            const caracters = ['❤️', '💖', '🌹'];
+            const coracao = document.createElement('div');
+            coracao.classList.add('coracao-bg');
+            coracao.innerText = caracters[Math.floor(Math.random() * caracters.length)];
+            coracao.style.left = Math.random() * 100 + 'vw';
+            coracao.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            coracao.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            document.body.appendChild(coracao);
+            setTimeout(() => { coracao.remove(); }, 5000);
+        }
+        setInterval(criarCoracoes, 400);
+    </script>
+
+</body>
+</html>
